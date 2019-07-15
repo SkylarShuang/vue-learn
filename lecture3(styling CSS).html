@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+    .demo{
+        background-color: grey;
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        display: inline-block;
+    }
+    .red{
+        background-color: red;
+    }
+    .blue{
+        background-color: blue;
+    }
+    .green{
+        background-color: green;
+    }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+         <!-- attach class with object(left is className,right is condition)-->
+        <div class="demo" 
+        @click ="attachRed = !attachRed"
+        :class = "{ red : attachRed}"></div>
+        <div class="demo"
+        @click ="attachRed = !attachRed"
+        :class ="divclass"></div>
+        <!-- divclass is a computed property -->
+        <div class="demo" 
+        @click ="attachRed = !attachRed"
+        :class ="[color,{red: attachRed}]"></div>
+        <div class="demo" 
+        :style ="{backgroundColor : color}"></div>
+        <div class="demo" 
+        :style ="[dymaticStyle,{height: width +'px'}]"></div>
+        <input type="text" v-model = "color">
+        <input type="text" v-model = "width">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue">  </script>
+    <script>
+     new Vue({
+         el:"#app",
+         data:{
+             attachRed: false,
+             color: "green",
+             width: 100
+         },
+         computed:{
+             divclass: function () {
+             return {
+                 red: this.attachRed ,
+                 blue: !this.attachRed
+             }
+         },
+            dymaticStyle: function(){
+            return {
+                backgroundColor : this.color,
+                width : this.width + "px"  
+                 }
+             }
+
+         }
+     });
+    </script> 
+</body>
+</html>

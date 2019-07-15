@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue">  </script>
+    <title>Event</title>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click = "increase(2,$event)"> Click Me</button>
+        <p>{{counter}}</p>
+        <p>{{counter*3 >10 ? 'Greater than 10' : "Smaller than 10"}}</p>
+        <p v-on:mousemove="updateCoordinate">Coordinate : {{x}}/{{y}}
+            <!-- v-on:mousemove.prevent can prevent a default event -->
+            <span v-on:mousemove.stop>DEAD SPOT</span>
+            <!-- key modifier -->
+            <input type="text" v-on:keyup.enter.space="alertMe">
+
+        </p>
+        <!-- form input binding -->
+        <input type="text" v-model = "name">
+        <p>{{name}}</p>
+        <!-- @click is shorthand of v-on:click -->
+        <button @click="initialValue++">Increase</button>
+        <button v-on:click="initialValue--">Decrease</button>
+        <button v-on:click="SecondIecrease++">SecondIecrease</button>
+        <p>Counter: {{initialValue}} </p>
+        <p>SecondCounter: {{SecondIecrease}}</p>
+        <p>Result: {{result()}} | {{output}}</p>
+
+    </div>
+        
+     <script>
+            new Vue({
+                el:"#app",
+                data:{
+                    counter: 0,
+                    x: 0,
+                    y: 0,
+                    name:'Skylar',
+                    initialValue: 0,
+                    SecondIecrease: 0
+                },
+                // Coomputed is more like data property,so output is not a function
+                //Output only excute when initialValue is updated,so if the result does not
+                //need to be caculated again, only evaluate ,just use computed
+                computed:{
+                    output :function(){
+                        console.log('output');
+                        return this.initialValue >5 ? "Greater than 5": "Smaller than 5";
+                    }
+                },
+                // wacth can do asynchoronic 
+                watch:{
+                    initialValue:function(initialValue){
+                    var vm = this;
+                    setTimeout(function(){
+                        vm.initialValue= 0;
+                    },2000)
+                    }
+                },
+                methods:{
+                 increase: function(step,event){
+                     return this.counter += step;
+                 },
+                 updateCoordinate: function(event){
+                     this.x = event.clientX;
+                     this.y = event.clientY;
+                 },
+                 alertMe: function(){
+                     alert("Alert!");
+                 },
+                 // result method excutes everytime 
+                 result :function(){
+                     console.log('method');
+                     return this.initialValue >5 ? "Greater than 5": "Smaller than 5";
+                 }
+             }
+            });
+    </script>
+</body>
+</html>
