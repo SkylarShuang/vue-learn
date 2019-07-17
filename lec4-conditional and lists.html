@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+
+<div id="exercise">
+    <!-- v-if attach or detach elements to the dom -->
+    <template v-if="type === 'A'">
+        <p>This is a template A</p>
+        <button>template A</button>
+    </template>
+    <p v-if="type === 'B'">Now you can see me B</p>
+    <!-- v-show is hide it(display: none) not detach it like v-if -->
+    <p v-show="type === 'A'">click it and you will see</p>
+    <button @click="changeType">Click me</button>
+    <ul>
+      <li v-for="(fruit, index) in fruits">{{fruit}}({{index}})</li>
+    </ul>
+    <template v-for="(fruit, index) in fruits">
+        <h1>{{fruit}}</h1>
+        <p>Do you want eat {{fruit}}</p>
+    </template>
+    <template v-for= "person in persons">
+        <div v-for="(value, key, index) in person">{{key}}: {{value}}({{index}})</div>
+    </template>
+</div>
+<script>
+   new Vue({
+       el:"#exercise",
+       data:{
+          type: 'A',
+          fruits: ['apple', 'banana', 'waterlemon'],
+          persons: [
+              {name: 'SHL', age: '18'},
+              {name: 'HZW', age: '18'}
+          ]
+       },
+       methods: {
+           changeType(){
+               if(this.type === 'A'){
+                   this.type = 'B'
+               }else if(this.type === 'B'){
+                   this.type = 'A'
+               }
+           }
+       }
+   })
+</script>
+</body>
+</html>
